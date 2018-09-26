@@ -5,4 +5,6 @@ int data;
 struct Node* next;
 struct Node* prev;
 };
+
+return 0;
 }
