@@ -12,16 +12,84 @@ Write a simulation function that calculates the waiting time for users.
 
 We need to create a UML and Diagram and do a Big-O of each functions.
 
-First request (up or down)
-    if up{
-      listOfStop.pushback(Request1);
-      if OutsideRequest == up && floorOfOutsideRequest<Request1&&>floorOfRequest1{
-        listOfStop pushback floorOfOutsideRequest;}
-      if OutsideRequest == up && floorOfOutsideRequest<Request1{
-        queueOfRequest pushback OutsideRequest
-         list pushback FloorOfOutsideRequest;
-      else queue pushback Request1;
+/////////////////////////////////////////////////////////////////////////////////////////////////
+#algorithm by leo
+struct Request{
+ tendency (up or down)
+ theFloorRequestAt
+ theFloorRequestTo
+ }
+ 
+ listOfStop;
+ uprequestlist;
+ downrequestlist;
+ FirstRequest;
+ 
+ if FirstRequest.tendency = up
+  uprequestlist insert FirstRequest;
+ if FirstRequest.tendency = down
+  downrequestlist insert FirstRequest;
+ tendency = FirstRequest.tendency;
+ 
+ insert(data){
+  if list.empty == true{
+  list.head = data;
+  }
+  else
+   for (i== list.begin(), list.end(),i++){
+    if i.data< data < i->next.data
+     insert data here;
+   } 
+ }
+ 
+ 
+ while tendency == up{
+      for (i = uprequestlist.begin(),uprequestlist.end(),i++){
+        listOfStop.insert i.theFloorRequestAt;
+        listOfStop.insert i.theFloorRequestTo;
+        }
+      if OutsideButton.tendency == up && currentfloor<OutsideButton.theFloorRequestAt{
+        listOfStop insert OutsideButton.theFloorRequestAt;
+        listOfStop insert OutsideButton.theFloorRequestTo;
+        }
+      if OutsideButton.tendency == up && OutsideButton.theFloorRequestAt<currentfloor{
+         uprequestlist insert OutsideButton;
+         }
+      if OutsideButton.tendency == down && OutsideButton.theFloorRequestAt{
+         downrequestlist insert OutsideButton;
+      }
+    if currentfloor reach the element in listOfStop{
+    listOfStop.delete iterater
+    }
+    if listOfStop.empty == true{
+    tendency = down
+    }
+    
+ while tendency == down{
+    for (i = downrequestlist.begin(),downrequestlist.end(),i++)
+     listOfStop.insert i.theFloorRequestAt;
+     listOfStop.insert i.theFloorRequestTo;
+    if OutsideButton.tendency == down && currentfloor>OutsideButton.theFloorRequestAt{
+        listOfStop insert OutsideButton.theFloorRequestAt;
+        listOfStop insert OutsideButton.theFloorRequestTo;
+        }
+      if OutsideButton.tendency == down && OutsideButton.theFloorRequestAt>currentfloor{
+         downrequestlist insert OutsideButton;
+         }
+      if OutsideButton.tendency == up && OutsideButton.theFloorRequestAt{
+         uprequestlist insert OutsideButton;
+      }
+    if currentfloor reach the element in listOfStop{
+    listOfStop.delete iterater
+    }
+    if listOfStop.empty == true{
+    tendency = up
+    } 
+ }
+ #end here
+/////////////////////////////////////////////////////////////////////////////////////////////////////    
         
-        
+return 0;
+
 
 
