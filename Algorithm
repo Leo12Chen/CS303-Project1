@@ -88,8 +88,94 @@ struct Request{
     } 
  }
  #end here
-/////////////////////////////////////////////////////////////////////////////////////////////////////    
-        
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#algorithm by leo
+#For multi-elevator (Havent finished yet)
+struct Request{
+ tendency (up or down)
+ theFloorRequestAt
+ theFloorRequestTo
+ };
+ struct Elevator{
+ tendency (up or down)
+ current_floor;
+ List listOfStop;
+ }
+ vector<List> Elevator;
+ List uprequestlist;
+ List downrequestlist;
+
+ 
+ insert(data){
+  if list.empty == true{
+  list.head = data;
+  }
+  else
+   for (i== list.begin(), list.end(),i++){
+    if i.data< data < i->next.data
+     insert data here;
+   } 
+ }
+ 
+ 
+ if  Request.tendency == up{
+   for(i=StopListOfElevator.begin(),StopListOfElevator.end(),++){
+    if i.tendency = up&&i.current_floor == Request.theFloorRequestAt{
+       i.listOfStop.insert Request.theFloorRequestAt;
+       i.listOfStop.insert Request.theFloorRequestTo;
+    }
+    else if i.tendency = up&&i.current_floor<Request.theFloorRequestAt{
+       i.listOfStop.insert Request.theFloorRequestAt;
+       }
+    }//end of for loop
+    
+      for (i = uprequestlist.begin(),uprequestlist.end(),i++){
+        listOfStop.insert i.theFloorRequestAt;
+        listOfStop.insert i.theFloorRequestTo;
+        }
+      if OutsideButton.tendency == up && currentfloor<OutsideButton.theFloorRequestAt{
+        listOfStop insert OutsideButton.theFloorRequestAt;
+        listOfStop insert OutsideButton.theFloorRequestTo;
+        }
+      if OutsideButton.tendency == up && OutsideButton.theFloorRequestAt<currentfloor{
+         uprequestlist insert OutsideButton;
+         }
+      if OutsideButton.tendency == down && OutsideButton.theFloorRequestAt{
+         downrequestlist insert OutsideButton;
+      }
+    if currentfloor reach the element in listOfStop{
+    listOfStop.delete iterater
+    }
+    if listOfStop.empty == true{
+    tendency = down
+    }
+    
+ while tendency == down{
+    for (i = downrequestlist.begin(),downrequestlist.end(),i++)
+     listOfStop.insert i.theFloorRequestAt;
+     listOfStop.insert i.theFloorRequestTo;
+    if OutsideButton.tendency == down && currentfloor>OutsideButton.theFloorRequestAt{
+        listOfStop insert OutsideButton.theFloorRequestAt;
+        listOfStop insert OutsideButton.theFloorRequestTo;
+        }
+      if OutsideButton.tendency == down && OutsideButton.theFloorRequestAt>currentfloor{
+         downrequestlist insert OutsideButton;
+         }
+      if OutsideButton.tendency == up && OutsideButton.theFloorRequestAt{
+         uprequestlist insert OutsideButton;
+      }
+    if currentfloor reach the element in listOfStop{
+    listOfStop.delete iterater
+    }
+    if listOfStop.empty == true{
+    tendency = up
+    } 
+ }
+ #end here
+/////////////////////////////////////////////////////////////////////////////////////////////////////         
 return 0;
 
 
