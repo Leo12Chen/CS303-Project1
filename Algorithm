@@ -15,23 +15,7 @@ We need to create a UML and Diagram and do a Big-O of each functions.
 /////////////////////////////////////////////////////////////////////////////////////////////////
 #algorithm by leo
 #For single elevator (Havent finished yet)
-struct Request{
- tendency (up or down)
- theFloorRequestAt
- theFloorRequestTo
- }
- 
- listOfStop;
- uprequestlist;
- downrequestlist;
- FirstRequest;
- 
- if FirstRequest.tendency = up
-  uprequestlist insert FirstRequest;
- if FirstRequest.tendency = down
-  downrequestlist insert FirstRequest;
- tendency = FirstRequest.tendency;
- 
+
  insert(data){
   if list.empty == true{
   list.head = data;
@@ -43,6 +27,30 @@ struct Request{
    } 
  }
  
+struct Request{
+ tendency (up or down)
+ theFloorRequestAt
+ }
+ 
+ struct Elevator{
+ tendency (up or down or nonusing)
+ current_floor;
+ List listOfStop;
+ List ListOfInsideRequest;
+ };
+
+ List uprequestlist;
+ List downrequestlist;
+
+ Request FirstRequest;
+ 
+ if FirstRequest.tendency = up
+  uprequestlist insert FirstRequest;
+ if FirstRequest.tendency = down
+  downrequestlist insert FirstRequest;
+ tendency = FirstRequest.tendency;
+ 
+
  
  while tendency == up{
       for (i = uprequestlist.begin(),uprequestlist.end(),i++){
