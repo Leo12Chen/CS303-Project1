@@ -14,6 +14,7 @@ We need to create a UML and Diagram and do a Big-O of each functions.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 #algorithm by leo
+#For single elevator
 struct Request{
  tendency (up or down)
  theFloorRequestAt
