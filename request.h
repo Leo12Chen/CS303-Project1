@@ -1,6 +1,6 @@
 ##################################################################
-Leo please take a look at this code and determine the best course of action. I'm not 100% sure how your algorithm works,
-So I just wrote this code really quick. Edit as needed. Thanks!
+#Leo please take a look at this code and determine the best course of action. I'm not 100% sure how your algorithm works,
+#So I just wrote this code really quick. Edit as needed. Thanks!
 ##################################################################
 
 #pragma once
