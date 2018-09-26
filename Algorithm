@@ -1,6 +1,20 @@
+A simple algorithm for handling requests: all requests users make are stored.
+The elevator prioritizes the requests that are on the way where it’s going, but also based on a first come first served principle.
+
+Write a simulation function that calculates the waiting time for users.
+ A user pushes either the up or down button to request the elevator.
+ Once the elevator arrives, the user gets in and specifies his/her destination floor. 
+ Meanwhile, other users outside or inside the elevator make requests as well.
+
+1. How many types of data structure will we have and how will they be implemented.
+2. What are we trying to do? (create a queue for elevator? How do we determine how the elevator moves?)
+3. how many classes are we using? (Elevator class, passenger class?, queue class?, list?)
+
+We need to create a UML and Diagram and do a Big-O of each functions.
+
 First request (up or down)
- if up{
-    listOfStop pushback Request1;
+    if up{
+      listOfStop.pushback(Request1);
       if OutsideRequest == up && floorOfOutsideRequest<Request1&&>floorOfRequest1{
         listOfStop pushback floorOfOutsideRequest;}
       if OutsideRequest == up && floorOfOutsideRequest<Request1{
@@ -8,4 +22,6 @@ First request (up or down)
          list pushback FloorOfOutsideRequest;
       else queue pushback Request1;
         
-return 0;
+        
+
+
