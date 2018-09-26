@@ -1,6 +1,8 @@
 # Project1
 int main(){
-
-
-return 0;
+struct Node{
+int data;
+struct Node* next;
+struct Node* prev;
+};
 }
