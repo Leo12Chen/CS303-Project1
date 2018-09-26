@@ -14,7 +14,7 @@ We need to create a UML and Diagram and do a Big-O of each functions.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 #algorithm by leo
-#For single elevator
+#For single elevator (Havent finished yet)
 struct Request{
  tendency (up or down)
  theFloorRequestAt
@@ -93,18 +93,22 @@ struct Request{
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 #algorithm by leo
-#For multi-elevator (Havent finished yet)
-struct Request{
+#For multi-elevator
+struct OutSideRequest{
  tendency (up or down)
- theFloorRequestAt
- theFloorRequestTo
+ theFloorRequestAt;
  };
+ 
  struct Elevator{
- tendency (up or down)
+ tendency (up or down or nonusing)
  current_floor;
  List listOfStop;
- }
- vector<List> Elevator;
+ List ListOfInsideRequest;
+ };
+ 
+ vector<Elevator> upElevator;
+ vector<Elevator> downElevator;
+ vector<Elevator> nonusingElevator;
  List uprequestlist;
  List downrequestlist;
 
@@ -120,61 +124,119 @@ struct Request{
    } 
  }
  
- 
- if  Request.tendency == up{
-   for(i=StopListOfElevator.begin(),StopListOfElevator.end(),++){
-    if i.tendency = up&&i.current_floor == Request.theFloorRequestAt{
-       i.listOfStop.insert Request.theFloorRequestAt;
-       i.listOfStop.insert Request.theFloorRequestTo;
-    }
-    else if i.tendency = up&&i.current_floor<Request.theFloorRequestAt{
-       i.listOfStop.insert Request.theFloorRequestAt;
-       }
-    }//end of for loop
-    
-      for (i = uprequestlist.begin(),uprequestlist.end(),i++){
-        listOfStop.insert i.theFloorRequestAt;
-        listOfStop.insert i.theFloorRequestTo;
-        }
-      if OutsideButton.tendency == up && currentfloor<OutsideButton.theFloorRequestAt{
-        listOfStop insert OutsideButton.theFloorRequestAt;
-        listOfStop insert OutsideButton.theFloorRequestTo;
-        }
-      if OutsideButton.tendency == up && OutsideButton.theFloorRequestAt<currentfloor{
-         uprequestlist insert OutsideButton;
+ for(i=upElevator.begin();upElevator.end();i++){
+   if(i.listOfInsideRequest.empty()!=true){
+      for(n=listOfInsideRequest.begin();listOfInsideRequest.end();n++){
+         if(n>=current_floor){
+          i.ListOfStop.insert(n);
+          i.ListOfInsideRequest.remove(n);
          }
-      if OutsideButton.tendency == down && OutsideButton.theFloorRequestAt{
-         downrequestlist insert OutsideButton;
       }
-    if currentfloor reach the element in listOfStop{
-    listOfStop.delete iterater
-    }
-    if listOfStop.empty == true{
-    tendency = down
-    }
-    
- while tendency == down{
-    for (i = downrequestlist.begin(),downrequestlist.end(),i++)
-     listOfStop.insert i.theFloorRequestAt;
-     listOfStop.insert i.theFloorRequestTo;
-    if OutsideButton.tendency == down && currentfloor>OutsideButton.theFloorRequestAt{
-        listOfStop insert OutsideButton.theFloorRequestAt;
-        listOfStop insert OutsideButton.theFloorRequestTo;
-        }
-      if OutsideButton.tendency == down && OutsideButton.theFloorRequestAt>currentfloor{
-         downrequestlist insert OutsideButton;
-         }
-      if OutsideButton.tendency == up && OutsideButton.theFloorRequestAt{
-         uprequestlist insert OutsideButton;
-      }
-    if currentfloor reach the element in listOfStop{
-    listOfStop.delete iterater
-    }
-    if listOfStop.empty == true{
-    tendency = up
-    } 
+   }
  }
- #end here
+ 
+  for(i=downElevator.begin();downElevator.end();i++){
+   if(i.listOfInsideRequest.empty()!=true){
+      for(n=listOfInsideRequest.begin();listOfInsideRequest.end();n++){
+         if(n<=current_floor){
+          i.ListOfStop.insert(n);
+          i.ListOfInsideRequest.remove(n);
+         }
+      }
+   }
+ }
+ 
+ 
+ for(i=upElevator.begin();upElebator.end();i++){
+   if(i.listOfStop.empty()==true){
+     if(i.listOfRequest.empty()==true){
+       nonusingElevator.pushback(i);
+       upElevator.remove(i);
+       }
+      else if(i.listOfRequest.empty()==false){
+       for(n=i.listOfRequest.begin();i.listOfRequest.end();n++){
+        i.listOfStop.insert(n);
+       }
+       downElevator.pushback(i);
+       upElevator.remove(i);
+      }
+ }
+ 
+ for(i=downElevator.begin();downElebator.end();i++){
+   if(i.listOfStop.empty()==true){
+     if(i.listOfRequest.empty()==true){
+       nonusingElevator.pushback(i);
+       downElevator.remove(i);
+       }
+      else if(i.listOfRequest.empty()==false){
+       for(n=i.listOfRequest.begin();i.listOfRequest.end();n++){
+        i.listOfStop.insert(n);
+       }
+       upElevator.pushback(i);
+       downElevator.remove(i);
+      }
+ }
+ 
+ if(OutSideRequest.tendency = up){
+  if(nonusingElevator.empty()!=true){
+    for(i=nonusingElevator.begin();nonusingElevator.end();i++){
+     find the closet nonusingElevator C for request;
+     upElevator.pushback(C);
+    }
+  }
+ uprequestlist.insert(OutSideRequest.theFloorRequestAt())
+ }
+ 
+ if(OutSideRequest.tendency = down){
+   if(nonusingElevator.empty()!=true){
+     for(i=nonusingElevator.begin();nonusingElevator.end();i++){
+       find the closet nonusingElevator C for request;
+       downElevator.pushback(C);
+            }
+      }
+ downrequestlist.insert(OutSideRequest.theFloorRequestAt())
+ }
+ 
+ for(i=upElevator.begin(),upElevator.end(),++){
+     if i.listOfStop.empty = true;
+     nonusing Elevator.pushback(i);
+     upElevator.remove(i);
+ }
+ for(i=downElevator.begin(),downElevator.end(),++){
+     if i.listOfStop.empty = true;
+     nonusing Elevator.pushback(i);
+     downElevator.remove(i);
+ }
+ 
+ for (n=uprequestlist.begin(),uprequestlist.end(),n++){
+   for(i=upElevator.begin(),upElevator.end(),i++){
+    
+    if i.current_floor == n.theFloorRequestAt{ //if one or more of upelevator current_floor is at Request.theFloorRequestAt
+       uprequestlist.remove(n);
+       for(upElevators rather than i)
+         .listofStop.remove(i.current_floor);
+    }
+    else if i.current_floor<n.theFloorRequestAt{ //if one or more of upelevator is below where the RequestAt, 
+       i.listOfStop.insert(n.theFloorRequestAt); // elevator insert the thefloorRequestAt into the listOfStop
+       }
+    }
+    
+    
+ for (n=downrequestlist.begin(),downrequestlist.end(),n++){
+   for(i=downElevator.begin(),downElevator.end(),i++){
+    
+    if i.current_floor == n.theFloorRequestAt{ //if one or more of upelevator current_floor is at Request.theFloorRequestAt
+       downrequestlist.remove(n);
+       for(downElevators rather than i)
+         .listofStop.remove(i.current_floor);
+    }
+    else if i.current_floor>n.theFloorRequestAt{ //if one or more of upelevator is below where the RequestAt, 
+       i.listOfStop.insert(n.theFloorRequestAt); // elevator insert the thefloorRequestAt into the listOfStop
+       }
+    }   
+    
+    
+    #end here
 /////////////////////////////////////////////////////////////////////////////////////////////////////         
 return 0;
 
