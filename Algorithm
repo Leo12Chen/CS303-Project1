@@ -37,7 +37,7 @@ struct Request{
  theFloorRequestAt
  }
  
- struct Elevator{
+ class Elevator{
  tendency (up or down or stop)
  current_floor;
  List listOfStop;           //It is the list of stopping floors that elevator will stop on the way to the peak or bottom of the request
@@ -123,7 +123,7 @@ struct OutSideRequest{
  theFloorRequestAt;
  };
  
- struct Elevator{
+ class Elevator{
  tendency (up or down or nonusing)
  current_floor;
  List listOfStop;
