@@ -13,8 +13,18 @@ Write a simulation function that calculates the waiting time for users.
 We need to create a UML and Diagram and do a Big-O of each functions.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-#algorithm by leo
-#For single elevator (Havent finished yet)
+#algorithm by Leo
+
+#For all activing elevators, they only have three tendency, up, down, or stop. When they have up tendency, they took all request which floors
+ above their current_floor and go all way up till the highest floor request, they will stop in the middle by the request's tendency go up but
+ they are lower the highest floor request, once they stop elevator will remove the stopping floor from the stoplist. After reach the highest
+ request floor at, if there are request going down, or request going up but lower than the current floor, change the tendency of the elevator
+ to down, and go all way down to the lowest request as what it did when it goes up.
+ 
+ For nonusing elevators, if there are any request, compare the current floor and request floor at, decide the tendency of the nonusing
+ elevators and change it to activing elevators.
+ 
+#For single elevator 
 
  insert(data){ //only for uprequestlist and ListOfStop when tendency is up
   insert data in from small to large order
@@ -30,47 +40,47 @@ struct Request{
  struct Elevator{
  tendency (up or down or stop)
  current_floor;
- List listOfStop;
- List ListOfInsideRequest;
+ List listOfStop;           //It is the list of stopping floors that elevator will stop on the way to the peak or bottom of the request
+ List ListOfInsideRequest;  //It is the list of requests from inside of elevator
  };
 
- List uprequestlist;
- List downrequestlist;
+ List uprequestlist;        //It is the list of stopping floors that when elevator tendency is up
+ List downrequestlist;      // for down
 
  Request FirstRequest;
  
  if Request.tendency = up
-  uprequestlist.insert(FirstRequest);
+  uprequestlist.insert(Request.theFloorRequestAt);     //add stopping floors to the lists
  if Request.tendency = down
-  downrequestlist.insert(FirstRequest);
+  downrequestlist.insert(Request.theFloorRequestAt);
  
 
  if Elevator.tendency == up{
-  for (i=ListOfInsideRequest.begin();ListOfInsideRequest.end();i++){
-     if(i.theFloorRequestTo >= current_floor){
-       Elevator.listOfStop.insert(i.theFloorRequestTo);
-     else
-       downrequestlist.insert(i.theFloorRequestTo);
+  for (i=ListOfInsideRequest.begin();ListOfInsideRequest.end();i++){ //deal with inside request first
+     if(i.theFloorRequestTo >= current_floor){                       //if the floor people want to go is higher or equal to current floor
+       Elevator.listOfStop.insert(i.theFloorRequestTo);              // add it to the stop list
+     else                                                            //it the floor people want to go is lower,
+       downrequestlist.insert(i.theFloorRequestTo);                  //add it to the downlist so elevator can deal with it when tendency is down
      }
   }
-  for (n=uprequestlist.begin(),uprequestlist.end(),n++){    
-    if (Elevator.current_floor == n.theFloorRequestAt){ //if one or more of upelevator current_floor is at Request.theFloorRequestAt
-       uprequestlist.remove(n);
-       Elevator.listofStop.remove(i.current_floor);
+  for (n=uprequestlist.begin(),uprequestlist.end(),n++){             //deal with outside request
+    if (Elevator.current_floor == n.theFloorRequestAt){ //if upelevator is at where people waiting for elevator
+       uprequestlist.remove(n);                         //remove it from the uprequest list  
     }
-    else if i.current_floor<n.theFloorRequestAt{ //if one or more of upelevator is below where the RequestAt, 
-       i.listOfStop.insert(n.theFloorRequestAt); // elevator insert the thefloorRequestAt into the listOfStop
-       }
+    else if i.current_floor<n.theFloorRequestAt{       //if upelevator is below where the RequestAt, 
+       i.listOfStop.insert(n.theFloorRequestAt);      // elevator insert the thefloorRequestAt into the listOfStop
+    }                                                //for those people waiting below the elevator current floor, we keep these request in the uprequest list and deal with it when elevator comes down and tendency is up again
   }
-  if (Elevator.listOfStop.empty){
-     if(uprequestlist.empty()&&downrequestlist.empty()){
-        Elevator.tendency = stop;
+  if (Elevator.listOfStop.empty){                    //if elevator reach the highest requested floor, which means stoplist is empty
+     if(uprequestlist.empty()&&downrequestlist.empty()){ // if there are no outside request
+        Elevator.tendency = stop;                        //means elevator can have a rest now
      }
-     else if(downrequestlist.tail>current_floor)
-     Elevator.tendency = up;
+     else if(downrequestlist.tail>current_floor)         // if the last one in down request list which means the highest floor in down tendency request list is higher than current floor
+     Elevator.tendency = up;                             // keep the elevator tendency as up
+     Elevator.listOfStop.insert(downrequestlist.tail);   // and set the tail as the destination
      }
-     else
-     Elevator.tendency = down;
+     else                                                //if all request in down list is lower than current floor
+     Elevator.tendency = down;                           //then elevator goes down
   }
 
  if Elevator.tendency == down{
@@ -82,12 +92,12 @@ struct Request{
      }
   }
   for (n=downrequestlist.begin(),downrequestlist.end(),n++){    
-    if (Elevator.current_floor == n.theFloorRequestAt){ //if one or more of upelevator current_floor is at Request.theFloorRequestAt
+    if (Elevator.current_floor == n.theFloorRequestAt){ 
        downrequestlist.remove(n);
        Elevator.listofStop.remove(i.current_floor);
     }
-    else if i.current_floor>n.theFloorRequestAt{ //if one or more of upelevator is below where the RequestAt, 
-       i.listOfStop.insert(n.theFloorRequestAt); // elevator insert the thefloorRequestAt into the listOfStop
+    else if i.current_floor>n.theFloorRequestAt{ 
+       i.listOfStop.insert(n.theFloorRequestAt); 
        }
   }
    if (Elevator.listOfStop.empty){
@@ -96,6 +106,7 @@ struct Request{
      }
      else if(uprequestlist.head<current_floor)
      Elevator.tendency = down;
+     Elevator.listOfStop.insert(uprequestlist.head);
      }
      else
      Elevator.tendency = up;
@@ -119,25 +130,21 @@ struct OutSideRequest{
  List ListOfInsideRequest;
  };
  
- vector<Elevator> upElevator;
+ vector<Elevator> upElevator;          //have vectors to store the elevators and sort them by three tendency
  vector<Elevator> downElevator;
  vector<Elevator> nonusingElevator;
  List uprequestlist;
  List downrequestlist;
 
  
- insert(data){
-  if list.empty == true{
-  list.head = data;
-  }
-  else
-   for (i== list.begin(), list.end(),i++){
-    if i.data< data < i->next.data
-     insert data here;
-   } 
+ insert(data){ //only for uprequestlist and ListOfStop when tendency is up
+  insert data in from small to large order
+ }
+ insert(data){ //only for downrequestlist
+  insert data in from large to small order and ListOfStop when tendency is down
  }
  
- if(OutSideRequest.tendency = up){
+ if(OutSideRequest.tendency = up){                            //insert requests to the lists
  uprequestlist.insert(OutSideRequest.theFloorRequestAt())
  }
  
@@ -145,13 +152,13 @@ struct OutSideRequest{
  downrequestlist.insert(OutSideRequest.theFloorRequestAt())
  }
  
- for(i=upElevator.begin();upElevator.end();i++){
-   if(i.listOfInsideRequest.empty()!=true){
+ for(i=upElevator.begin();upElevator.end();i++){              //deal with elevator's insider request first
+   if(i.listOfInsideRequest.empty()!=true){                   //when there is some insiderequest
       for(n=listOfInsideRequest.begin();listOfInsideRequest.end();n++){
-         if(n>=current_floor){
+         if(n>=current_floor){                                //when elevator goes up, put all request higher than current floor to the stop list
           i.ListOfStop.insert(n);
-          i.ListOfInsideRequest.remove(n);
-         }
+          i.ListOfInsideRequest.remove(n);                    //and remove those request from the request list
+         }                                                    //for those request lower than current floor we keep them still until elevator change its tendency
       }
    }
  }
@@ -168,17 +175,17 @@ struct OutSideRequest{
  }
  
  
- for(i=upElevator.begin();upElebator.end();i++){
+ for(i=upElevator.begin();upElebator.end();i++){              //when upelevator reach the highest request it has
    if(i.listOfStop.empty()==true){
-     if(i.listOfInsideRequest.empty()==true){
-       nonusingElevator.pushback(i);
+     if(i.listOfInsideRequest.empty()==true){                 //and there are not insider request left
+       nonusingElevator.pushback(i);                          //change it into nonusing elevator
        upElevator.remove(i);
        }
-      else if(i.listOfInsideRequest.empty()==false){
+      else if(i.listOfInsideRequest.empty()==false){          //when there are still request haven't deal with, means the request were lower then current floor
        for(n=i.listOfInsideRequest.begin();i.listOfRequest.end();n++){
-        i.listOfStop.insert(n);
+        i.listOfStop.insert(n);                               //insert those request to the stop list  
        }
-       downElevator.pushback(i);
+       downElevator.pushback(i);                              //change it to down elevator
        upElevator.remove(i);
       }
  }
@@ -197,14 +204,14 @@ struct OutSideRequest{
        downElevator.remove(i);
       }
  }
- for(i=nonusingElevator.begin();nonusingElebator.end();i++){
-   if(uprequestlist.empty!=true){
-     if(uprequestlist.head<current_floor){
-       downElevator.pushback(i);
+ for(i=nonusingElevator.begin();nonusingElebator.end();i++){   //when there are outside request and there are nonusing elevator
+   if(uprequestlist.empty!=true){                              //when request are up
+     if(uprequestlist.head<current_floor){                     //if elevator is higher than request at
+       downElevator.pushback(i);                               //change it to the downelevator
        nonusingElevator.remove(i);
        }
-     else if(uprequestlist.head>current_floor){
-       upElevator.pushback(i);
+     else if(uprequestlist.head>current_floor){                //if elevator is lower than request at
+       upElevator.pushback(i);                                 //change it to the upelevator
        nonusingElevator.remove(i);
      }
    if(downrequestlist.empty!=true){
@@ -219,29 +226,16 @@ struct OutSideRequest{
  }
 
  
- for(i=upElevator.begin(),upElevator.end(),++){
-     if i.listOfStop.empty = true;
-     nonusing Elevator.pushback(i);
-     upElevator.remove(i);
- }
- for(i=downElevator.begin(),downElevator.end(),++){
-     if i.listOfStop.empty = true;
-     nonusing Elevator.pushback(i);
-     downElevator.remove(i);
- }
- 
- for (n=uprequestlist.begin(),uprequestlist.end(),n++){
-   for(i=upElevator.begin(),upElevator.end(),i++){
-    
-    if i.current_floor == n.theFloorRequestAt{ //if one or more of upelevator current_floor is at Request.theFloorRequestAt
-       uprequestlist.remove(n);
-       for(upElevators rather than i)
-         .listofStop.remove(i.current_floor);
+ for (n=uprequestlist.begin(),uprequestlist.end(),n++){        //deal with outside request
+   for(i=upElevator.begin(),upElevator.end(),i++){    
+    if i.current_floor == n.theFloorRequestAt{                 //if one or some of elevators are at/reach where the request floor is
+       uprequestlist.remove(n);                                //take it away from the list
+       i.listofStop.remove(i.current_floor);                   //take it away from every other elevator stoplist
     }
-    else if i.current_floor<n.theFloorRequestAt{ //if one or more of upelevator is below where the RequestAt, 
-       i.listOfStop.insert(n.theFloorRequestAt); // elevator insert the thefloorRequestAt into the listOfStop
-       }
-    }
+    else if i.current_floor<n.theFloorRequestAt{               //if one or more of upelevator is below where the RequestAt, 
+       i.listOfStop.insert(n.theFloorRequestAt);               // elevator insert the thefloorRequestAt into the listOfStop
+       }                                                       //for those request lower than the all upelevator, keep them in the list
+    }                                                          //when some of elevator changed from down to up, or some nonusing elevator will deal with them
     
     
  for (n=downrequestlist.begin(),downrequestlist.end(),n++){
