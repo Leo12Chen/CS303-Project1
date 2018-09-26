@@ -16,24 +16,19 @@ We need to create a UML and Diagram and do a Big-O of each functions.
 #algorithm by leo
 #For single elevator (Havent finished yet)
 
- insert(data){
-  if list.empty == true{
-  list.head = data;
-  }
-  else
-   for (i== list.begin(), list.end(),i++){
-    if i.data< data < i->next.data
-     insert data here;
-   } 
+ insert(data){ //only for uprequestlist and ListOfStop when tendency is up
+  insert data in from small to large order
  }
- 
+ insert(data){ //only for downrequestlist
+  insert data in from large to small order and ListOfStop when tendency is down
+ }
 struct Request{
  tendency (up or down)
  theFloorRequestAt
  }
  
  struct Elevator{
- tendency (up or down or nonusing)
+ tendency (up or down or stop)
  current_floor;
  List listOfStop;
  List ListOfInsideRequest;
@@ -44,57 +39,67 @@ struct Request{
 
  Request FirstRequest;
  
- if FirstRequest.tendency = up
-  uprequestlist insert FirstRequest;
- if FirstRequest.tendency = down
-  downrequestlist insert FirstRequest;
- tendency = FirstRequest.tendency;
+ if Request.tendency = up
+  uprequestlist.insert(FirstRequest);
+ if Request.tendency = down
+  downrequestlist.insert(FirstRequest);
  
 
- 
- while tendency == up{
-      for (i = uprequestlist.begin(),uprequestlist.end(),i++){
-        listOfStop.insert i.theFloorRequestAt;
-        listOfStop.insert i.theFloorRequestTo;
-        }
-      if OutsideButton.tendency == up && currentfloor<OutsideButton.theFloorRequestAt{
-        listOfStop insert OutsideButton.theFloorRequestAt;
-        listOfStop insert OutsideButton.theFloorRequestTo;
-        }
-      if OutsideButton.tendency == up && OutsideButton.theFloorRequestAt<currentfloor{
-         uprequestlist insert OutsideButton;
-         }
-      if OutsideButton.tendency == down && OutsideButton.theFloorRequestAt{
-         downrequestlist insert OutsideButton;
-      }
-    if currentfloor reach the element in listOfStop{
-    listOfStop.delete iterater
+ if Elevator.tendency == up{
+  for (i=ListOfInsideRequest.begin();ListOfInsideRequest.end();i++){
+     if(i.theFloorRequestTo >= current_floor){
+       Elevator.listOfStop.insert(i.theFloorRequestTo);
+     else
+       downrequestlist.insert(i.theFloorRequestTo);
+     }
+  }
+  for (n=uprequestlist.begin(),uprequestlist.end(),n++){    
+    if (Elevator.current_floor == n.theFloorRequestAt){ //if one or more of upelevator current_floor is at Request.theFloorRequestAt
+       uprequestlist.remove(n);
+       Elevator.listofStop.remove(i.current_floor);
     }
-    if listOfStop.empty == true{
-    tendency = down
+    else if i.current_floor<n.theFloorRequestAt{ //if one or more of upelevator is below where the RequestAt, 
+       i.listOfStop.insert(n.theFloorRequestAt); // elevator insert the thefloorRequestAt into the listOfStop
+       }
+  }
+  if (Elevator.listOfStop.empty){
+     if(uprequestlist.empty()&&downrequestlist.empty()){
+        Elevator.tendency = stop;
+     }
+     else if(downrequestlist.tail>current_floor)
+     Elevator.tendency = up;
+     }
+     else
+     Elevator.tendency = down;
+  }
+
+ if Elevator.tendency == down{
+  for (i=ListOfInsideRequest.begin();ListOfInsideRequest.end();i++){
+     if(i.theFloorRequestTo <= current_floor){
+       Elevator.listOfStop.insert(i.theFloorRequestTo);
+     else
+       uprequestlist.insert(i.theFloorRequestTo);
+     }
+  }
+  for (n=downrequestlist.begin(),downrequestlist.end(),n++){    
+    if (Elevator.current_floor == n.theFloorRequestAt){ //if one or more of upelevator current_floor is at Request.theFloorRequestAt
+       downrequestlist.remove(n);
+       Elevator.listofStop.remove(i.current_floor);
     }
-    
- while tendency == down{
-    for (i = downrequestlist.begin(),downrequestlist.end(),i++)
-     listOfStop.insert i.theFloorRequestAt;
-     listOfStop.insert i.theFloorRequestTo;
-    if OutsideButton.tendency == down && currentfloor>OutsideButton.theFloorRequestAt{
-        listOfStop insert OutsideButton.theFloorRequestAt;
-        listOfStop insert OutsideButton.theFloorRequestTo;
-        }
-      if OutsideButton.tendency == down && OutsideButton.theFloorRequestAt>currentfloor{
-         downrequestlist insert OutsideButton;
-         }
-      if OutsideButton.tendency == up && OutsideButton.theFloorRequestAt{
-         uprequestlist insert OutsideButton;
-      }
-    if currentfloor reach the element in listOfStop{
-    listOfStop.delete iterater
-    }
-    if listOfStop.empty == true{
-    tendency = up
-    } 
- }
+    else if i.current_floor>n.theFloorRequestAt{ //if one or more of upelevator is below where the RequestAt, 
+       i.listOfStop.insert(n.theFloorRequestAt); // elevator insert the thefloorRequestAt into the listOfStop
+       }
+  }
+   if (Elevator.listOfStop.empty){
+     if(uprequestlist.empty()&&downrequestlist.empty()){
+        Elevator.tendency = stop;
+     }
+     else if(uprequestlist.head<current_floor)
+     Elevator.tendency = down;
+     }
+     else
+     Elevator.tendency = up;
+  }
  #end here
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
