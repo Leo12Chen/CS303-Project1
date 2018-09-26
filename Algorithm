@@ -137,6 +137,14 @@ struct OutSideRequest{
    } 
  }
  
+ if(OutSideRequest.tendency = up){
+ uprequestlist.insert(OutSideRequest.theFloorRequestAt())
+ }
+ 
+ if(OutSideRequest.tendency = down){
+ downrequestlist.insert(OutSideRequest.theFloorRequestAt())
+ }
+ 
  for(i=upElevator.begin();upElevator.end();i++){
    if(i.listOfInsideRequest.empty()!=true){
       for(n=listOfInsideRequest.begin();listOfInsideRequest.end();n++){
@@ -162,12 +170,12 @@ struct OutSideRequest{
  
  for(i=upElevator.begin();upElebator.end();i++){
    if(i.listOfStop.empty()==true){
-     if(i.listOfRequest.empty()==true){
+     if(i.listOfInsideRequest.empty()==true){
        nonusingElevator.pushback(i);
        upElevator.remove(i);
        }
-      else if(i.listOfRequest.empty()==false){
-       for(n=i.listOfRequest.begin();i.listOfRequest.end();n++){
+      else if(i.listOfInsideRequest.empty()==false){
+       for(n=i.listOfInsideRequest.begin();i.listOfRequest.end();n++){
         i.listOfStop.insert(n);
        }
        downElevator.pushback(i);
@@ -177,38 +185,39 @@ struct OutSideRequest{
  
  for(i=downElevator.begin();downElebator.end();i++){
    if(i.listOfStop.empty()==true){
-     if(i.listOfRequest.empty()==true){
+     if(i.listOfInsideRequest.empty()==true){
        nonusingElevator.pushback(i);
        downElevator.remove(i);
        }
-      else if(i.listOfRequest.empty()==false){
-       for(n=i.listOfRequest.begin();i.listOfRequest.end();n++){
+      else if(i.listOfInsideRequest.empty()==false){
+       for(n=i.listOfInsideRequest.begin();i.listOfRequest.end();n++){
         i.listOfStop.insert(n);
        }
        upElevator.pushback(i);
        downElevator.remove(i);
       }
  }
- 
- if(OutSideRequest.tendency = up){
-  if(nonusingElevator.empty()!=true){
-    for(i=nonusingElevator.begin();nonusingElevator.end();i++){
-     find the closet nonusingElevator C for request;
-     upElevator.pushback(C);
-    }
-  }
- uprequestlist.insert(OutSideRequest.theFloorRequestAt())
+ for(i=nonusingElevator.begin();nonusingElebator.end();i++){
+   if(uprequestlist.empty!=true){
+     if(uprequestlist.head<current_floor){
+       downElevator.pushback(i);
+       nonusingElevator.remove(i);
+       }
+     else if(uprequestlist.head>current_floor){
+       upElevator.pushback(i);
+       nonusingElevator.remove(i);
+     }
+   if(downrequestlist.empty!=true){
+     if(downrequestlist.tail<current_floor){
+       downElevator.pushback(i);
+       nonusingElevator.remove(i);
+       }
+     else if(downrequestlist.tail>current_floor){
+       upElevator.pushback(i);
+       nonusingElevator.remove(i);
+     }
  }
- 
- if(OutSideRequest.tendency = down){
-   if(nonusingElevator.empty()!=true){
-     for(i=nonusingElevator.begin();nonusingElevator.end();i++){
-       find the closet nonusingElevator C for request;
-       downElevator.pushback(C);
-            }
-      }
- downrequestlist.insert(OutSideRequest.theFloorRequestAt())
- }
+
  
  for(i=upElevator.begin(),upElevator.end(),++){
      if i.listOfStop.empty = true;
