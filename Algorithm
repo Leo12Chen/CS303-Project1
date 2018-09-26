@@ -1,0 +1,10 @@
+First request (up or down)
+ if up{
+    listOfStop pushback Request1;
+      if OutsideRequest == up && floorOfOutsideRequest<Request1&&>floorOfRequest1{
+        listOfStop pushback floorOfOutsideRequest;}
+      if OutsideRequest == up && floorOfOutsideRequest<Request1{
+        queueOfRequest pushback OutsideRequest
+         list pushback FloorOfOutsideRequest;
+      else queue pushback Request1;
+        
