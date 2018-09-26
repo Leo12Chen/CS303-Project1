@@ -1,6 +1,8 @@
 #########################
-#Same with this one im not sure if this is what you are thinking of.
-#Edit as Needed. Thanks!
+/*
+Same with this one im not sure if this is what you are thinking of.
+Edit as Needed. Thanks!
+*/
 #########################
 
 #include "stdafx.h"
