@@ -27,6 +27,7 @@ struct request
 };
 
 //insert a new request after a given request
+
 void insertRequestAfter(struct request* prev_request, string tenden)
 {
 
@@ -42,7 +43,7 @@ void insertRequestAfter(struct request* prev_request, string tenden)
 	new_request->floorAt = prev_request;
 
 	if (new_request->floorTo != NULL)
-		new_request->floorTo-> floorAt = new_request;
+		new_request-> floorAt = new_request;
 }
 
 
