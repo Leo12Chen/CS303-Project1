@@ -18,11 +18,11 @@ using namespace std;
 struct request
 {
 	request* floorAt;
-	request* floorTo;
+	
 	string tendency;
 
-	request(request* floor_at = NULL, request* floor_to = NULL, string tenden = NULL);
-	request(request* floor_at, request* floor_to, string tenden) {};
+	request(request* floor_at = NULL, string tenden = NULL);
+	request(request* floor_at, string tenden) {};
 
 };
 
@@ -38,10 +38,6 @@ void insertRequestAfter(struct request* prev_request, string tenden)
 	struct request* new_request = new request;
 
 	new_request->tendency = tenden;
-
-	new_request->floorTo = prev_request->floorTo ;
-
-	prev_request->floorTo = new_request;
 
 	new_request->floorAt = prev_request;
 
