@@ -41,9 +41,11 @@ struct ListOfOutsideRequest
 {
 	int floorAt;
 	string direction;
+	ListOfOutsideRequest* next;
+	ListOfOutsideRequest* prev;
 
-	ListOfOutsideRequest(int floor_at, string direct) {};
-	ListOfOutsideRequest(int floor_at = NULL, string direct = NULL);
+	ListOfOutsideRequest(const int& data_item, string dir, ListOfOutsideRequest* prev_val = NULL, ListOfOutsideRequest* next_val = NULL) : floorAt(data_item), direction(dir), prev(prev_val), next(next_val) {}
+
 
 };
 
