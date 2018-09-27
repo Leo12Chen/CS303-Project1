@@ -11,9 +11,13 @@ struct Elevator {
 	string direction;
 	int current_floor;
 
-	ListOfStop Elevator_1;
-	ListOfInSideRequest Elevator_1;
-	ListOfOutsideRequest Elevator_1;
+	ListOfStop ElevatorStop_1;
+	ListOfInSideRequest ElevatorInside_1;
+	ListOfOutsideRequest ElevatorOutside_1;
+ 
+	Elevator(string dir, const int& currentFloor, ListOfStop list1 , ListOfInSideRequest list2, ListOfOutsideRequest list3) :
+	direction(dir), current_floor(currentFloor), ElevatorStop_1(list1), ElevatorInside_1(list2), ElevatorOutside_1(list3)  {}
+
 
 };
 
@@ -30,7 +34,7 @@ struct ListOfInSideRequest {
 	ListOfInSideRequest* next;
 	ListOfInSideRequest* prev;
 
-	ListOfInSideRequest(const int& data_item, ListOfInSideRequest* prev_val = NULL, ListOfInSideRequest* next_val = NULL) :FloorForRequest(data_item), prev(prev_val), next(next_val) {}
+	ListOfInSideRequest(const int& data_item, ListOfInSideRequest* prev_val = NULL, ListOfInSideRequest* next_val = NULL) : FloorRequested(data_item), prev(prev_val), next(next_val) {}
 };
 
 struct ListOfOutsideRequest
