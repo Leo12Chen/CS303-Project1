@@ -96,7 +96,7 @@ public:
      return false;    
   }
   
-  void List*AscendInsert(const int& item) {
+  void AscendInsert(const int& item) {
 	Dnode*temp = new DNode(item, Null, head->next);
 	if (item < head->data) {               //  when item inserting is smaller than head   
 		push_front(const int& item);
@@ -117,7 +117,7 @@ public:
 		push_back(const int&item); // when item larger than any element in the list
 	}
 }
-  void List*DescendInsert(const int& item) {
+  void DescendInsert(const int& item) {
 	Dnode*temp = new DNode(item, Null, head->next);
 	if (item > head->data) {               //  when item inserting is larger than head   
 		push_front(const int& item);
