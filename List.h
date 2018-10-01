@@ -69,10 +69,10 @@ public:
 		while (current_node != NULL){
 
 			if (current_node->data == item){
-				if (current_node->next == NULL)//the last element in the list
+				if (current_node->next == NULL)  //the last element in the list
 					return pop_back();
 
-				if (current_node == head) //if the node we are deleting is the head
+				if (current_node == head)       //if the node we are deleting is the head
 					head = current_node->next;
 
 				DNode* to_be_deleted = current_node;
@@ -94,7 +94,48 @@ public:
      return true;
     else
      return false;    
+  }
+  
+  void List*AscendInsert(const int& item) {
+	Dnode*temp = new DNode(item, Null, head->next);
+	if (item < head->data) {               //  when item inserting is smaller than head   
+		push_front(const int& item);
 	}
-  
-  
+	else if (item > head->data&&head->next == NULL) {   //when list only have a head and inserting item is larger than head
+		push_back(const int& item);
+	}
+	else {
+		while (temp != NULL) { //when item larger than head and list has more than one elements
+			if ((temp->data > temp->prev->data) && (temp->data < temp->next->data)) {//when item find the position it fits in 
+				temp->prev->next = temp;  // insert the temp into the list
+				temp->next->prev = temp;
+				break;
+			}
+			else
+				temp = temp->next;        // keep going next until it find the position
+		}
+		push_back(const int&item); // when item larger than any element in the list
+	}
+}
+  void List*DescendInsert(const int& item) {
+	Dnode*temp = new DNode(item, Null, head->next);
+	if (item > head->data) {               //  when item inserting is larger than head   
+		push_front(const int& item);
+	}
+	else if (item < head->data&&head->next == NULL) {   //when list only have a head and inserting item is smaller than head
+		push_back(const int& item);
+	}
+	else {
+		while (temp != NULL) { //when item smaller than head and list has more than one elements
+			if ((temp->data < temp->prev->data) && (temp->data > temp->next->data)) {//when item find the position it fits in 
+				temp->prev->next = temp;  // insert the temp into the list
+				temp->next->prev = temp;
+				break;
+			}
+			else
+				temp = temp->next;        // keep going next until it find the position
+		}
+		push_back(const int&item); // when item larger than any element in the list
+	}
+}  
 }
