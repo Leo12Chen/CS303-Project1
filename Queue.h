@@ -10,7 +10,7 @@ using namespace std;
 class queue {
 private:
 
-	DNode * FrontRequest;
+	DNode* FrontRequest;
 	DNode* LastRequest;
 	size_t num_items;
 
