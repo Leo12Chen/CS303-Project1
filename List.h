@@ -1,17 +1,15 @@
+#pragma once
+#ifndef LIST_H
+#define LIST_H
+
 #include <iostream>
 #include <cmath>
 #include <cstddef>
+#include "DNode.h"
 
 class List{
 private:
-struct DNode {
-		int data;
-		DNode* next;
-		DNode* prev;
-		DNode(const Item_Type& data_item, DNode* prev_val = NULL, DNode* next_val = NULL) :
-			data(data_item), prev(prev_val), next(next_val) {}
-	}; 
-  DNode* head;
+	DNode* head;
 	DNode* tail;
 	size_t num_items;
 }
@@ -139,3 +137,6 @@ public:
 	}
 }  
 }
+
+
+#endif
