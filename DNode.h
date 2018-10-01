@@ -2,6 +2,8 @@
 #ifndef DNODE_H
 #define DNODE_H
 
+#include <cstddef>
+
 struct DNode {
 		int data;
 		DNode* next;
