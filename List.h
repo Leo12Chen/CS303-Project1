@@ -2,7 +2,7 @@
 #include <cmath>
 #include <cstddef>
 
-class list{
+class List{
 private:
 struct DNode {
 		int data;
