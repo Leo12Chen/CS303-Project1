@@ -7,33 +7,33 @@
 #include <cstddef>
 #include "DNode.h"
 
-class List{
+class List {
 private:
 	DNode* head;
 	DNode* tail;
 	size_t num_items;
-}
+
 public:
 	void push_front(const int& item) {
-		head = new DNode(item, NULL, head); 
+		head = new DNode(item, NULL, head);
 		if (head->next != NULL)
-			head->next->prev = head; 
+			head->next->prev = head;
 		if (tail == NULL)
 			tail = head;
 		num_items++;
 	}
-  void push_back(const int& item) {
+	void push_back(const int& item) {
 		if (tail != NULL) {
-			tail->next = new DNode(item, tail, NULL); 
-			tail = tail->next; 
+			tail->next = new DNode(item, tail, NULL);
+			tail = tail->next;
 			num_items++;
 		}
-		else {       
+		else {
 			push_front(item);
 		}
 	}
-  
-  void pop_front() {
+
+	void pop_front() {
 		if (head == NULL)
 			throw std::invalid_argument
 			("List is empty");
@@ -46,8 +46,8 @@ public:
 			tail = NULL;
 		num_items--;
 	}
-  
-  void pop_back() {
+
+	void pop_back() {
 		if (tail == NULL)
 			throw std::invalid_argument
 			("List is empty");
@@ -60,13 +60,13 @@ public:
 			head = NULL;
 		num_items--;
 	}
-  
-  void remove(const int& item){
+
+	void remove(const int& item) {
 		DNode* current_node = head;
 
-		while (current_node != NULL){
+		while (current_node != NULL) {
 
-			if (current_node->data == item){
+			if (current_node->data == item) {
 				if (current_node->next == NULL)  //the last element in the list
 					return pop_back();
 
@@ -86,57 +86,57 @@ public:
 				current_node = current_node->next;
 		}
 	}
-  
-  bool empty(){	
+
+	bool empty() {
 		if (num_items>0)
-     return true;
-    else
-     return false;    
-  }
-  
-  void AscendInsert(const int& item) {
-	Dnode*temp = new DNode(item, Null, head->next);
-	if (item < head->data) {               //  when item inserting is smaller than head   
-		push_front(const int& item);
+			return true;
+		else
+			return false;
 	}
-	else if (item > head->data&&head->next == NULL) {   //when list only have a head and inserting item is larger than head
-		push_back(const int& item);
-	}
-	else {
-		while (temp != NULL) { //when item larger than head and list has more than one elements
-			if ((temp->data > temp->prev->data) && (temp->data < temp->next->data)) {//when item find the position it fits in 
-				temp->prev->next = temp;  // insert the temp into the list
-				temp->next->prev = temp;
-				break;
-			}
-			else
-				temp = temp->next;        // keep going next until it find the position
+
+	void AscendInsert(const int& item) {
+		DNode* temp = new DNode(item, NULL, head->next);
+		if (item < head->data) {               //  when item inserting is smaller than head   
+			push_front(item);
 		}
-		push_back(const int&item); // when item larger than any element in the list
-	}
-}
-  void DescendInsert(const int& item) {
-	Dnode*temp = new DNode(item, Null, head->next);
-	if (item > head->data) {               //  when item inserting is larger than head   
-		push_front(const int& item);
-	}
-	else if (item < head->data&&head->next == NULL) {   //when list only have a head and inserting item is smaller than head
-		push_back(const int& item);
-	}
-	else {
-		while (temp != NULL) { //when item smaller than head and list has more than one elements
-			if ((temp->data < temp->prev->data) && (temp->data > temp->next->data)) {//when item find the position it fits in 
-				temp->prev->next = temp;  // insert the temp into the list
-				temp->next->prev = temp;
-				break;
-			}
-			else
-				temp = temp->next;        // keep going next until it find the position
+		else if (item > head->data&&head->next == NULL) {   //when list only have a head and inserting item is larger than head
+			push_back(item);
 		}
-		push_back(const int&item); // when item larger than any element in the list
+		else {
+			while (temp != NULL) { //when item larger than head and list has more than one elements
+				if ((temp->data > temp->prev->data) && (temp->data < temp->next->data)) {//when item find the position it fits in 
+					temp->prev->next = temp;  // insert the temp into the list
+					temp->next->prev = temp;
+					break;
+				}
+				else
+					temp = temp->next;        // keep going next until it find the position
+			}
+			push_back(item); // when item larger than any element in the list
+		}
 	}
-}  
-}
+	void DescendInsert(const int& item) {
+		DNode* temp = new DNode(item, NULL, head->next);
+		if (item > head->data) {               //  when item inserting is larger than head   
+			push_front(item);
+		}
+		else if (item < head->data&&head->next == NULL) {   //when list only have a head and inserting item is smaller than head
+			push_back(item);
+		}
+		else {
+			while (temp != NULL) { //when item smaller than head and list has more than one elements
+				if ((temp->data < temp->prev->data) && (temp->data > temp->next->data)) {//when item find the position it fits in 
+					temp->prev->next = temp;  // insert the temp into the list
+					temp->next->prev = temp;
+					break;
+				}
+				else
+					temp = temp->next;        // keep going next until it find the position
+			}
+			push_back(item); // when item larger than any element in the list
+		}
+	}
+};
 
 
 #endif
