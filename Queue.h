@@ -7,7 +7,7 @@
 #include <exception>
 using namespace std;
 
-class queue {
+class Queue {
 private:
 
 	DNode* FrontRequest;
@@ -16,7 +16,7 @@ private:
 
 public:
 
-	queue(DNode* FrontRequest = NULL, DNode* LastRequest = NULL) :
+	Queue(DNode* FrontRequest = NULL, DNode* LastRequest = NULL) :
 		FrontRequest(FrontRequest), LastRequest(LastRequest), num_items(0) {}
 
 	void push(const int& item) {
