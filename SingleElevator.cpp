@@ -31,28 +31,28 @@ Basic algorithm of the code:
 
 using namepace std;
 
-void RecieveInsideRequest(Elevator elevator,Queue queue,int requestFloorTo){
-     if(elevator.direction == "up" && requestFloorTo > elevator.current_floor)
-        elevator.ListOfStop.AscendInsert(requestFloorTo);
-     else if (elevator.direction == "down" && requestFloorTo < elevator.current_floor)
-        elevator.ListOfStop.DescendInsert(requestFloorTo);
+void RecieveInsideRequest(Elevator elevator,Queue queue,int requestFloorTo){ //this fuction take care of people push the button inside of the elevator
+     if(elevator.direction == "up" && requestFloorTo > elevator.current_floor) // when elevator going up and people request the floor higher than current
+        elevator.ListOfStop.AscendInsert(requestFloorTo);                      // add it to stop list
+     else if (elevator.direction == "down" && requestFloorTo < elevator.current_floor)//when elevator going down and request floor lower than current
+        elevator.ListOfStop.DescendInsert(requestFloorTo);                    //add it to stop list
      else {
-         Request request = new Request("stop",requestFloorTo);
+         Request request = new Request("stop",requestFloorTo);                //other than those, we put them in the queue for waiting
          queue.push(requst);
      }        
 }
 
-void RecieveOutSideRequest(Request request, Queue queue){
+void RecieveOutSideRequest(Request request, Queue queue){   //whenever we got request from outside, push it into queue
     queue.push(request);
 }
 
-void pushOutSideRequestToStoppingList(Elevator elevator,Queue queue){
-     elevator.ListOfStop.pushback(queue.front());
-     queue.pop();
+void pushOutSideRequestToStoppingList(Elevator elevator,Queue queue){//deal with request in queue
+     elevator.ListOfStop.pushback(queue.front());                    //check the top of queue and push it to the stop list
+     queue.pop();                                                    //pop it
      Queue TempQ = new Queue();
-     while(queue.empty()!=true){ 
-        if(queue.front().direction == "stop"){
-          if(elevator.direction == "up"&& elevator.curret_floor < queue.front().current_floor){
+     while(queue.empty()!=true){                                     //check wether there are any request we can stop by on the way
+        if(queue.front().direction == "stop"){                       //for those insiderequest we pushed into the queue
+          if(elevator.direction == "up"&& elevator.curret_floor < queue.front().current_floor){  // if they are on the way push it to the list and pop it from the queue
              elevator.ListOfStop.AscendInsert(queue.front().current_floor;)
           }
           else if(elevator.direction == "down" && elevator.current_floor> queue.front().current_floor){
@@ -67,10 +67,11 @@ void pushOutSideRequestToStoppingList(Elevator elevator,Queue queue){
           elevator.ListOfStop.DescendInsert(queue.front().current_floor);
           queue.pop();
         }
-        else{
+        else{                        //for those request we cant make it by the way, we push it to a temp queue and make a new queue for pending request
           tempQ.push(queue.front());
           queue.pop()
         }
+        queue=tempQ;
      }     
 }
 
@@ -84,20 +85,20 @@ int main(){
    RecieveOutSideRequest(request,queue);
    RecieveInSideRequest(singleElevator,RequestQueue,requestFloorTo);
  
-   if (singleElevator.ListOfStop.empty() == false){
-      if (singleElevator.current_floor==singleElevator.ListOfStop->head->data)
-          singleElevator.ListOfStop.popfront();
-      else if(singleElevator.ListOfStop.head->data > singleElevator.current_floor)
+   if (singleElevator.ListOfStop.empty() == false){  //when elevator is running
+      if (singleElevator.current_floor==singleElevator.ListOfStop->head->data) //when it reaches the floor in the stop list
+          singleElevator.ListOfStop.popfront();                                //pop it from list
+      else if(singleElevator.ListOfStop.head->data > singleElevator.current_floor) //elevator's direction is decided by head of stop list
           singleElevator.direction == "up";
       else
           singleElevator.direction == "down";
    }
  
-   if (singleElevator.ListOfStop.empty() == true){
-      if(Request Queue.empty()!= true)
-       pushOutSideRequestToStoppingList(singleElevator,queue);
+   if (singleElevator.ListOfStop.empty() == true){           //when elevator stop list is empty
+      if(Request Queue.empty()!= true)                       //if there pending queue is not empty
+       pushOutSideRequestToStoppingList(singleElevator,queue); //push pending request to the elevator
       else
-       singleElevator.direction = "stop";
+       singleElevator.direction = "stop";                   //if both list and queue are empty, elevator will take a break
    }
    
 
