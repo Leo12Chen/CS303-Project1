@@ -46,7 +46,7 @@ void RecieveOutSideRequest(Request request, Queue queue){   //whenever we got re
     queue.push(request);
 }
 
-void pushOutSideRequestToStoppingList(Elevator elevator,Queue queue){//deal with request in queue
+void pushPendingRequestToStoppingList(Elevator elevator,Queue queue){//deal with request in queue
      elevator.ListOfStop.pushback(queue.front());                    //check the top of queue and push it to the stop list
      queue.pop();                                                    //pop it
      Queue TempQ = new Queue();
@@ -95,8 +95,8 @@ int main(){
    }
  
    if (singleElevator.ListOfStop.empty() == true){           //when elevator stop list is empty
-      if(Request Queue.empty()!= true)                       //if there pending queue is not empty
-       pushOutSideRequestToStoppingList(singleElevator,queue); //push pending request to the elevator
+      if(RequestQueue.empty()!= true)                       //if there pending queue is not empty
+       pushPendingRequestToStoppingList(singleElevator,queue); //push pending request to the elevator
       else
        singleElevator.direction = "stop";                   //if both list and queue are empty, elevator will take a break
    }
