@@ -2,7 +2,6 @@
 #ifndef REQUEST_H
 #define REQUEST_H
 
-#include "stdafx.h"
 #include "List.h"
 #include <iostream>
 #include <string>
