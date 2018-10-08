@@ -8,12 +8,12 @@
 #include "DNode.h"
 
 class List {
-private:
+public:
 	DNode* head;
 	DNode* tail;
 	size_t num_items;
 
-public:
+
 	void push_front(const int& item) {
 		head = new DNode(item, NULL, head);
 		if (head->next != NULL)
