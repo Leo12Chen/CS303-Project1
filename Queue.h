@@ -52,6 +52,12 @@ public:
 		num_items--;
 	}
 
+	bool empty() {
+		if (num_items == 0)
+			return true;
+		else
+			return false;
+	}
 
 	void pop_target(const Request& target) {
 
