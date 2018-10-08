@@ -80,15 +80,17 @@ void pushPendingRequestToStoppingList(Elevator elevator, Queue queue) {//deal wi
 
 int main() {
 	Elevator singleElevator;
+	singleElevator.current_floor = 1;
+	singleElevator.direction = "Stop";
 	Queue RequestQueue;
 	Request request;
 	int requestFloorTo;
 	RecieveOutSideRequest(request, RequestQueue);
 	RecieveInsideRequest(singleElevator, RequestQueue, requestFloorTo);
 
-	if (singleElevator.ListOfStop.empty() == false) {  //when elevator is running
-		if (singleElevator.current_floor == singleElevator.ListOfStop->head->data) //when it reaches the floor in the stop list
-			singleElevator.ListOfStop.pop_front();                                //pop it from list
+	if (singleElevator.ListOfStop.empty() == false) {                                 //when elevator is running
+		if (singleElevator.current_floor == singleElevator.ListOfStop.head->data)    //when it reaches the floor in the stop list
+			singleElevator.ListOfStop.pop_front();                                    //pop it from list
 		else if (singleElevator.ListOfStop.head->data > singleElevator.current_floor) //elevator's direction is decided by head of stop list
 			singleElevator.direction == "up";
 		else
