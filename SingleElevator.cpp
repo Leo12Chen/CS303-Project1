@@ -47,7 +47,7 @@ void RecieveOutSideRequest(Request request, Queue queue){   //whenever we got re
 }
 
 void pushPendingRequestToStoppingList(Elevator elevator,Queue queue){//deal with request in queue
-     elevator.ListOfStop.pushback(queue.front());                    //check the top of queue and push it to the stop list
+     elevator.ListOfStop.pushback(queue.front().current_floor);                    //check the top of queue and push it to the stop list
      queue.pop();                                                    //pop it
      Queue TempQ = new Queue();
      while(queue.empty()!=true){                                     //check wether there are any request we can stop by on the way
