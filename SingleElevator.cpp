@@ -88,25 +88,49 @@ int main() {
 	int requestFloorTo;
 //	RecieveOutSideRequest(request, RequestQueue);
 //	RecieveInsideRequest(singleElevator, RequestQueue, requestFloorTo);
-	int choice = 0;
-	while (true) {
-		cout << "You have to insert request manually since our project will only take care of how elevator take care of request" << endl;
-		cout << "1.Set the elevator's floor" << endl;
-		cout << "2.Set a outside request" << endl;
-		cout << "3.Set a inside request" << endl;
-		cout << "4.Show elevator current information" << endl;
-		cout << "5.Stop the simulator" << endl;
+	int choice;
+	bool loop = true;
+	cout << "Welcome to our Elevator Simulator!" << endl << endl;
+	while (loop == true) {
+		cout << "Please pick an option." << endl << endl;
+		cout << "1. Set the elevator's floor" << endl;
+		cout << "2. Set a outside request" << endl;
+		cout << "3. Set a inside request" << endl;
+		cout << "4. Show elevator current information" << endl;
+		cout << "5. Stop the simulator" << endl << endl;
 		cin >> choice;
-		if (choice == 5)
-			break;
+
 		switch (choice) {
 		case 1:
-			cout << "Which floor is our awesome elevator at now?" << endl;
+			cout << endl << "Which floor is our awesome elevator at now?" << endl << endl;
 			int cfloor;
 			cin >> cfloor;
 			singleElevator.current_floor = cfloor;
-			cout << "Our elevator is at" << cfloor << " now!";
+			cout << endl << "Our elevator is at floor " << cfloor << " now!" << endl << endl;
+			system("pause");
+			cout << endl;
+			system("CLS");
 			break;
+
+		case 3:
+			cout << endl << "Which floor would you like to go to?" << endl << endl;
+			cin >> requestFloorTo;
+			cout << endl << "Floor " << requestFloorTo << " has been placed into the list of next stops." << endl << endl;
+			RecieveInsideRequest(singleElevator, RequestQueue, requestFloorTo);
+			system("pause");
+			cout << endl;
+			system("CLS");
+			break;
+
+			
+
+		case 5:
+			system("CLS");
+			cout << "Thank you for using our Elevator Simulator!" << endl;
+			system("pause");
+			loop = false;
+			break;
+
 		default:
 			cout << "Come on read carefully!" << endl;
 		}
