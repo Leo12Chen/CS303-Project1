@@ -3,39 +3,38 @@
 #define QUEUE_H
 
 #include <cstddef>
-#include "DNode.h"
-#include <exception>
+#include "DnodeQueue.h"
+#include "Request.h"
 using namespace std;
 
 class Queue {
 private:
 
-	DNode* FrontRequest;
-	DNode* LastRequest;
+	DNodeQueue * FrontRequest;
+	DNodeQueue* LastRequest;
 	size_t num_items;
 
 public:
 
-	Queue(DNode* FrontRequest = NULL, DNode* LastRequest = NULL) :
+	Queue(DNodeQueue* FrontRequest = NULL, DNodeQueue* LastRequest = NULL) :
 		FrontRequest(FrontRequest), LastRequest(LastRequest), num_items(0) {}
 
-	void push(const int& item) {
+	void push(const Request& item) {
 		if (FrontRequest == NULL) {
-			LastRequest = new DNode(item, NULL);
+			LastRequest = new DNodeQueue(item, NULL);
 			FrontRequest = LastRequest;
-			LastRequest = new DNode(item, NULL);
+			LastRequest = new DNodeQueue(item, NULL);
 			FrontRequest = LastRequest;
 		}
 		else {
-			LastRequest->next = new DNode(item, NULL);
+			LastRequest->next = new DNodeQueue(item, NULL);
 			LastRequest = LastRequest->next;
 		}
 		num_items++;
 	}
 
-	int& front() {
+	const Request& front() {
 		return FrontRequest->data;
-
 	}
 
 	int size() {
@@ -44,7 +43,7 @@ public:
 
 
 	void pop() {
-		DNode* old_front = FrontRequest;
+		DNodeQueue* old_front = FrontRequest;
 		FrontRequest = FrontRequest->next;
 		if (FrontRequest == NULL) {
 			LastRequest = NULL;
@@ -53,7 +52,8 @@ public:
 		num_items--;
 	}
 
-	void pop_target(const int& target) {
+
+	void pop_target(const Request& target) {
 
 		if (FrontRequest == NULL)
 			cout << "No Item in Queue" << endl;
@@ -63,12 +63,12 @@ public:
 		bool deleted = false;
 
 		while (counter != 0) {
-			if (FrontRequest->data != target) {
+			if (FrontRequest->data.current_floor != target.current_floor || FrontRequest->data.direction != target.direction) {
 				push(FrontRequest->data);
 				pop();
 				counter--;
 			}
-			else if (FrontRequest->data == target) {
+			else if (FrontRequest->data.current_floor == target.current_floor && FrontRequest->data.direction == target.direction) {
 				pop();
 				counter--;
 				deleted = true;
