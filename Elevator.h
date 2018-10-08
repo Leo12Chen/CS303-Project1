@@ -2,7 +2,6 @@
 #ifndef ELEVATOR_H
 #define ELEVATOR_H
 
-#include "stdafx.h"
 #include "List.h"
 #include <iostream>
 #include <string>
