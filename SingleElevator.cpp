@@ -30,7 +30,7 @@ elevators and change it to activing elevators.
 
 using namespace std; 
 
-void RecieveInsideRequest(Elevator elevator, Queue queue, int requestFloorTo) { //this fuction take care of people push the button inside of the elevator
+void RecieveInsideRequest(Elevator& elevator, Queue& queue, int requestFloorTo) { //this fuction take care of people push the button inside of the elevator
 	if (elevator.direction == "up" && requestFloorTo > elevator.current_floor) // when elevator going up and people request the floor higher than current
 		elevator.ListOfStop.AscendInsert(requestFloorTo);                      // add it to stop list
 	else if (elevator.direction == "down" && requestFloorTo < elevator.current_floor)//when elevator going down and request floor lower than current
@@ -43,11 +43,11 @@ void RecieveInsideRequest(Elevator elevator, Queue queue, int requestFloorTo) { 
 	}
 }
 
-void RecieveOutSideRequest(Request request, Queue queue) {              //whenever we got request from outside, push it into queue
+void RecieveOutSideRequest(Request& request, Queue& queue) {              //whenever we got request from outside, push it into queue
 	queue.push(request);
 }
 
-void pushPendingRequestToStoppingList(Elevator elevator, Queue queue) {//deal with request in queue
+void pushPendingRequestToStoppingList(Elevator& elevator, Queue& queue) {//deal with request in queue
 	elevator.ListOfStop.push_back(queue.front().current_floor);        //check the top of queue and push it to the stop list
 	queue.pop();                                                       //pop it
 	Queue TempQ ;
@@ -81,13 +81,11 @@ void pushPendingRequestToStoppingList(Elevator elevator, Queue queue) {//deal wi
 int main() {
 
 	Elevator singleElevator;
-	singleElevator.current_floor = 1;
-	singleElevator.direction = "Stop";
+	//singleElevator.current_floor = 1;
+	//singleElevator.direction = "Stop";
 	Queue RequestQueue;
 	Request request;
 	int requestFloorTo;
-//	RecieveOutSideRequest(request, RequestQueue);
-//	RecieveInsideRequest(singleElevator, RequestQueue, requestFloorTo);
 	int choice;
 	bool loop = true;
 	cout << "Welcome to our Elevator Simulator!" << endl << endl;
@@ -115,7 +113,6 @@ int main() {
 		case 3:
 			cout << endl << "Which floor would you like to go to?" << endl << endl;
 			cin >> requestFloorTo;
-			cout << endl << "Floor " << requestFloorTo << " has been placed into the list of next stops." << endl << endl;
 			RecieveInsideRequest(singleElevator, RequestQueue, requestFloorTo);
 			system("pause");
 			cout << endl;
