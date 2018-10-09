@@ -23,12 +23,20 @@ private:
 		DNode(const int& data_item, DNode* prev_val = NULL, DNode* next_val = NULL) :
 			data(data_item), prev(prev_val), next(next_val) {}
 	};
-
-public:
-
 	DNode* head;
 	DNode* tail;
 	size_t num_items;
+
+public:
+
+	int getHeadData() {
+		return head->data;
+	}
+	int getTailData() {
+		if (num_items == 1)
+			return head->data;
+		return tail->data;
+	}
 
 	List() : head(NULL), tail(NULL), num_items(0) { }
 
