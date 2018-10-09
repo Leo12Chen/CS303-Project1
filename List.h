@@ -127,7 +127,7 @@ public:
 	}
 	void AscendInsert(const int& item) {
 		if (empty() == true) {
-			head->data = item;
+			push_front(item);
 		}
 		else {
 			DNode* temp = head;
@@ -153,7 +153,7 @@ public:
 	}
 	void DescendInsert(const int& item) {
 		if (empty() == true) {
-			head->data = item;
+			push_front(item);
 		}
 		else {
 			DNode* temp = head;
