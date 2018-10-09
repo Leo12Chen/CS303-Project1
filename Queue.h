@@ -19,6 +19,26 @@ public:
 	Queue(DNodeQueue* FrontRequest = NULL, DNodeQueue* LastRequest = NULL) :
 		FrontRequest(FrontRequest), LastRequest(LastRequest), num_items(0) {}
 
+	
+	void printQueue() {
+
+		if (FrontRequest == NULL) {
+			cout << "No Item in Queue" << endl;
+			return;
+		}
+
+		int counter = size();
+
+		cout << "The following items are in the Queue:" << endl;
+		while (counter != 0) {
+			cout << front().current_floor << " " << front().direction << endl;
+			push(front());
+			pop();
+			counter--;
+		}
+
+	}
+	
 	void push(const Request& item) {
 		if (FrontRequest == NULL) {
 			LastRequest = new DNodeQueue(item, NULL);
