@@ -31,15 +31,20 @@ elevators and change it to activing elevators.
 using namespace std; 
 
 void RecieveInsideRequest(Elevator& elevator, Queue& queue, int requestFloorTo) { //this fuction take care of people push the button inside of the elevator
-	if (elevator.direction == "up" && requestFloorTo > elevator.current_floor) // when elevator going up and people request the floor higher than current
+	if (elevator.direction == "up" && requestFloorTo > elevator.current_floor) { // when elevator going up and people request the floor higher than current
 		elevator.ListOfStop.AscendInsert(requestFloorTo);                      // add it to stop list
-	else if (elevator.direction == "down" && requestFloorTo < elevator.current_floor)//when elevator going down and request floor lower than current
+		cout << endl << "Floor " << requestFloorTo << " has been placed into the list of next stops." << endl << endl;
+	}
+	else if (elevator.direction == "down" && requestFloorTo < elevator.current_floor) {//when elevator going down and request floor lower than current
 		elevator.ListOfStop.DescendInsert(requestFloorTo);                    //add it to stop list
+		cout << endl << "Floor " << requestFloorTo << " has been placed into the list of next stops." << endl << endl;
+	}
 	else {
 		Request request;
 		request.current_floor = requestFloorTo;                         //other than those, we put them in the queue for waiting
 		request.direction = "stop";
 		queue.push(request);
+		cout << endl << "Floor " << requestFloorTo << " has been placed into the Queue for pending." << endl << endl;
 	}
 }
 
