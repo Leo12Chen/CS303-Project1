@@ -5,13 +5,32 @@
 #include <iostream>
 #include <cmath>
 #include <cstddef>
-#include "DNode.h"
 
 class List {
+private:
+	struct DNode {
+		// Data Fields
+		/** The data */
+		int data;
+		/** The pointer to the next node. */
+		DNode* next;
+
+		/** The pointer to the previous node. */
+		DNode* prev;
+
+		// Constructor
+		DNode(const int& data_item, DNode* prev_val = NULL, DNode* next_val = NULL) :
+			data(data_item), prev(prev_val), next(next_val) {}
+	};
+
 public:
+
 	DNode* head;
 	DNode* tail;
 	size_t num_items;
+
+	List() : head(NULL), tail(NULL), num_items(0) { }
+
 
 
 	void push_front(const int& item) {
@@ -88,14 +107,14 @@ public:
 	}
 
 	bool empty() {
-		if (num_items>0)
-			return true;
-		else
+		if (num_items > 0)
 			return false;
+		else
+			return true;
 	}
 
 	void AscendInsert(const int& item) {
-		DNode* temp = new DNode(item, NULL, head->next);
+		DNode* temp = head;
 		if (item < head->data) {               //  when item inserting is smaller than head   
 			push_front(item);
 		}
@@ -116,7 +135,7 @@ public:
 		}
 	}
 	void DescendInsert(const int& item) {
-		DNode* temp = new DNode(item, NULL, head->next);
+		DNode* temp = head;
 		if (item > head->data) {               //  when item inserting is larger than head   
 			push_front(item);
 		}
