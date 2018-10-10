@@ -125,6 +125,7 @@ int main() {
 	int requestFloorTo;
 	int choice = 0;
 	int counter = 0;
+	int clock = 0;
 	Request request;
 	cout << "Welcome to our Elevator Simulator!" << endl << endl;
 	while (counter == 0) {
@@ -140,14 +141,13 @@ int main() {
 
 		switch (choice) {
 		case 1: {
+			clock++;
 			cout << endl << "Which floor is our awesome elevator at now?" << endl;
 			int cfloor;
 			cin >> cfloor;
 			singleElevator.current_floor = cfloor;
 			singleElevator.direction = "stop";
 			cout << endl << "Our elevator is at floor " << cfloor << " now!" << endl << endl;
-			system("pause");
-			system("CLS");
 
 			if (singleElevator.ListOfStop.empty() != true) {
 				if (singleElevator.current_floor == singleElevator.ListOfStop.getHeadData()) {     //when it reaches the floor in the stop list
@@ -160,10 +160,14 @@ int main() {
 				else
 					singleElevator.direction = "stop";                   //if both list and queue are empty, elevator will take a break
 			}
+			cout << endl << clock << " simulation time has passed" << endl << endl;
+			system("pause");
+			system("CLS");
 
 			break; }
 
 		case 2: {
+			clock++;
 			cout << endl << "We need to know which floor you are at and which direction you want to go. The elevator will handle this request" << endl << endl;
 			cout << "The elevator is currently at floor " << singleElevator.current_floor << " and its direction is " << singleElevator.direction << endl << endl;
 			cout << "Tell me which floor you are currently on" << endl;
@@ -209,16 +213,18 @@ int main() {
 
 					//	}
 
-
+			cout << endl << clock << " simulation time has passed" << endl << endl;
 			system("pause");
 			system("CLS");
 			break;
 		}
 		case 3: {
+			clock++;
 			cout << endl << "Which floor would you like to go to?" << endl << endl;
 			cin >> requestFloorTo;
 			RecieveInsideRequest(singleElevator, RequestQueue, requestFloorTo);
 			checkTheDirectionOfElevator(singleElevator);
+			cout << endl << clock << " simulation time has passed" << endl << endl;
 			system("pause");
 			cout << endl;
 			system("CLS");
@@ -243,12 +249,14 @@ int main() {
 			break;
 		}
 		case 6: {
-				system("CLS");
-				cout << "Thank you for using our Elevator Simulator!" << endl;
-				system("pause");
-				counter = 1;
-				break;
+				
+			system("CLS");
+			cout << "Thank you for using our Elevator Simulator!" << endl;
+			system("pause");
+			counter = 1;
+			break;
 		}
+
 		default:
 			cout << "Come on read carefully! Hit the right number!" << endl<<endl;
 		}
