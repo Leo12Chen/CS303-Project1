@@ -23,7 +23,7 @@ public:
 	void printQueue() {
 
 		if (FrontRequest == NULL) {
-			cout << "No Item in Queue" << endl;
+			cout << "No Item in Queue" << endl <<endl;
 			return;
 		}
 
@@ -36,6 +36,7 @@ public:
 			pop();
 			counter--;
 		}
+		cout << endl;
 
 	}
 	
