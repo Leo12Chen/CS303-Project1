@@ -119,39 +119,36 @@ void pushPendingRequestToStoppingList(Elevator&elevator, Queue&queue) {//deal wi
 int main() {
 	Queue RequestQueue;
 	Elevator singleElevator;
-	//singleElevator.current_floor = 1;
-	//singleElevator.direction = "Stop";
+	singleElevator.current_floor = 1;
+	singleElevator.direction = "stop";
 	
 	int requestFloorTo;
-//	RecieveOutSideRequest(request, RequestQueue);
-//	RecieveInsideRequest(singleElevator, RequestQueue, requestFloorTo);
 	int choice = 0;
 	int counter = 0;
 	Request request;
-	/*
-	request.current_floor = 0;
-	request.direction = "up";
-	RecieveOutSideRequest(request, RequestQueue);
-	cout << RequestQueue.front().current_floor << RequestQueue.front().direction << endl;*/
+	cout << "Welcome to our Elevator Simulator!" << endl << endl;
 	while (counter == 0) {
 		
-		cout << "You have to insert request manually since our project will only take care of how elevator take care of request" << endl;
-		cout << "1.Set the elevator's floor" << endl;
-		cout << "2.Set a outside request" << endl;
-		cout << "3.Set a inside request" << endl;
-		cout << "4.Show elevator current information" << endl;
-		cout << "5.Show the pending request queue!" << endl;
-		cout << "6.Stop the simulator" << endl<<endl;
+		cout << "You have to insert request manually. Our simulator will take care of how the elevator take care of the requests" << endl << endl;
+		cout << "1. Set the elevator's floor" << endl;
+		cout << "2. Set a outside request" << endl;
+		cout << "3. Set a inside request" << endl;
+		cout << "4. Show elevator current information" << endl;
+		cout << "5. Show the pending request queue" << endl;
+		cout << "6. Stop the simulator" << endl<<endl;
 		cin >> choice;
 
 		switch (choice) {
 		case 1: {
-			cout << "Which floor is our awesome elevator at now?" << endl;
+			cout << endl << "Which floor is our awesome elevator at now?" << endl;
 			int cfloor;
 			cin >> cfloor;
 			singleElevator.current_floor = cfloor;
 			singleElevator.direction = "stop";
-			cout << "Our elevator is at" << cfloor << " now!" << endl << endl;
+			cout << endl << "Our elevator is at floor " << cfloor << " now!" << endl << endl;
+			system("pause");
+			system("CLS");
+
 			if (singleElevator.ListOfStop.empty() != true) {
 				if (singleElevator.current_floor == singleElevator.ListOfStop.getHeadData()) {     //when it reaches the floor in the stop list
 					singleElevator.ListOfStop.pop_front();
@@ -167,12 +164,12 @@ int main() {
 			break; }
 
 		case 2: {
-			cout << "Okay we need to know which floor you are at and which direction you wanna go and we will tell you how elevator will handle this request" << endl;
-			cout << "Elevator is at " << singleElevator.current_floor << " and its direction is " << singleElevator.direction << endl;
-			cout << "Tell me where you at now" << endl;
+			cout << endl << "We need to know which floor you are at and which direction you want to go. The elevator will handle this request" << endl << endl;
+			cout << "The elevator is currently at floor " << singleElevator.current_floor << " and its direction is " << singleElevator.direction << endl << endl;
+			cout << "Tell me which floor you are currently on" << endl;
 			int cfloor;
 			cin >> cfloor;
-			cout << "Tell me which direction you wanna go(up or down,they are only choice my friend)" << endl;
+			cout << endl << "Tell me which direction you want to go (up or down, they are only choice my friend)" << endl;
 			string direc;
 			cin >> direc;
 			Request request;
@@ -180,20 +177,18 @@ int main() {
 			request.direction = direc;
 			//cout << singleElevator.direction << endl;
 
-
 			//cout << crequest.current_floor << crequest.direction << endl;
-
 
 			//RecieveOutSideRequest(request, RequestQueue);
 
 			//cout << RequestQueue.front().current_floor << RequestQueue.front().direction << endl;
 
 			if (pushornot(request, singleElevator, RequestQueue) == true) {
-				cout << "the request has been insert to stoplist of elevator, it will stop by you in this round" << endl;
+				cout << endl << "the request have been inserted into the stoplist of the elevator, it will stop by you in this round" << endl << endl;
 				//pushPendingRequestToStoppingList(singleElevator, RequestQueue);
 			}
 			else {
-				cout << "Your request won't be insert to stoplist now, it will be inserted into queue and take care of it later" << endl;
+				cout << endl << "Your request won't be insert to stoplist now, it will be inserted into queue and take care of it later" << endl << endl;
 			}
 			checkTheDirectionOfElevator(singleElevator);
 
@@ -215,30 +210,36 @@ int main() {
 					//	}
 
 
-
+			system("pause");
+			system("CLS");
 			break;
 		}
 		case 3: {
 			cout << endl << "Which floor would you like to go to?" << endl << endl;
 			cin >> requestFloorTo;
 			RecieveInsideRequest(singleElevator, RequestQueue, requestFloorTo);
+			checkTheDirectionOfElevator(singleElevator);
 			system("pause");
 			cout << endl;
 			system("CLS");
 			break;
 		}
 		case 4: {
-			cout << "Elevator is now at the " << singleElevator.current_floor << " and the direction of it is " << singleElevator.direction << endl;
+			cout << endl << "Elevator is now at floor " << singleElevator.current_floor << " and the direction of it is " << singleElevator.direction << endl << endl;
 			cout << "The floors elevator gonna to stop:" << endl;
 			singleElevator.ListOfStop.printList();
 			cout << endl << endl;
+
+			system("pause");
+			system("CLS");
 			break;
 
 		}
 		case 5: {
-			cout << "Here is the pending requests in the queue, first-in-first-out!" << endl;
+			cout << endl << "Here is the pending requests in the queue, first-in-first-out!" << endl << endl;
 			RequestQueue.printQueue();
 			system("pause");
+			system("CLS");
 			break;
 		}
 		case 6: {
